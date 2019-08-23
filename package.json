@@ -5,10 +5,13 @@
   "dependencies": {
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
+    "install": "^0.13.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-redux": "^7.1.0",
     "react-scripts": "2.0.4",
     "react-test-renderer": "^16.6.3",
+    "redux": "^4.0.4",
     "styled-components": "^4.1.1"
   },
   "scripts": {
@@ -25,5 +28,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-	]
+  ],
+  "devDependencies": {
+    "redux-devtools": "^3.5.0"
+  }
 }

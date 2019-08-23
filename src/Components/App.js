@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import { suits, values } from "../utils";
 
@@ -8,27 +9,36 @@ import Player from "./Player";
 import Button from "./Button";
 
 import { Footer } from "../Styles/Styled";
+import { addPlayer } from '../Redux/actions/index';
+
+const mapStateToProps = (state) => ({
+		players: state.players
+});
+const mapDispatchToProps = (dispatch) => ({
+		addPlayer: () => dispatch(addPlayer())
+});
 
 class App extends Component {
 
-	state = {
-		players: ['player ', 'player '],
-	}
+	// state = {
+	// 	players: ['player ', 'player '],
+	// }
 
-	handlePlayer = () => {
-		const newList = this.state.players
-		if (newList.length <= 5) {
-			newList.push('player')
-			this.setState({
-				players: [...newList]
-			})
-		}
-		console.log(newList, 'hello world')
-	}
+	// handlePlayer = () => {
+	// 	const newList = this.state.players;
+	// 	if (newList.length <= 5) {
+	// 		newList.push('player')
+	// 		this.setState({
+	// 			players: [...newList]
+	// 		})
+	// 	}
+	// 	console.log(newList, 'hello world')
+	// }
 
 	render() {
-		console.log(this.state.players);
-		const { players } = this.state;
+		console.log(this.props);
+		// const { players } = this.state;
+		const { players, addPlayer } = this.props;
 
 		return (
 				<Layout>
@@ -42,12 +52,16 @@ class App extends Component {
 							<h1>Players</h1>
 						</header>
 						<section>
-						{players.map((key, index) => <Player key={index} name="Player name " />)}
+						{
+							players.map((key, index) =>
+								<Player key={index} name="Player name " />
+						)}
 						</section>
 						<Footer>
 							<Button
 								icon="🙋‍"
-								onClick={this.handlePlayer}
+								// onClick={this.handlePlayer}
+								onClick={() => addPlayer()}
 							>Add new player</Button>
 							<Button icon="🏆">Find the winner</Button>
 						</Footer>
@@ -58,4 +72,4 @@ class App extends Component {
 	}
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
