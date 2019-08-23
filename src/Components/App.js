@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { store } from '../../src/index';
 
 import { suits, values } from "../utils";
 
@@ -19,7 +20,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 class App extends Component {
-
+	componentDidMount() {
+		store.subscribe(() => {
+			this.forceUpdate();
+		});
+	}
 	// state = {
 	// 	players: ['player ', 'player '],
 	// }
