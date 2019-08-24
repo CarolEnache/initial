@@ -2,18 +2,22 @@ export const initialSate = {
   players: ['player ', 'player ']
 }
 
-const handlePlayer = () => {
-  const{ players } = initialSate;
+const handlePlayer = (state) => {
+  let { players } = state;
+  const newList = [...players];
   if (players.length <= 5) {
-    players.push('player')
+    newList.push('player')
   }
-  console.log(players, 'hello from Redux')
+  return {
+    ...state,
+    players: newList,
+  };
 }
 
 const reducer = (state = initialSate, action) => {
   switch (action.type) {
     case 'ADD_PLAYER':
-      return handlePlayer()
+      return handlePlayer(state)
     default: return state
   }
 }

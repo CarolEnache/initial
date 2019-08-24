@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import { store } from '../../src/index';
+import { addPlayer } from '../Redux/actions/index';
 
 import { suits, values } from "../utils";
 
@@ -10,7 +12,6 @@ import Player from "./Player";
 import Button from "./Button";
 
 import { Footer } from "../Styles/Styled";
-import { addPlayer } from '../Redux/actions/index';
 
 const mapStateToProps = (state) => ({
 		players: state.players
@@ -20,34 +21,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 class App extends Component {
-	componentDidMount() {
-		store.subscribe(() => {
-			this.forceUpdate();
-		});
-	}
-	// state = {
-	// 	players: ['player ', 'player '],
-	// }
-
-	// handlePlayer = () => {
-	// 	const newList = this.state.players;
-	// 	if (newList.length <= 5) {
-	// 		newList.push('player')
-	// 		this.setState({
-	// 			players: [...newList]
-	// 		})
-	// 	}
-	// 	console.log(newList, 'hello world')
-	// }
 
 	render() {
 		console.log(this.props);
-		// const { players } = this.state;
+
 		const { players, addPlayer } = this.props;
 
 		return (
 				<Layout>
-
 					<section>
 						<h1>Cards deck</h1>
 						<Deck suits={suits} values={values} />
@@ -65,13 +46,11 @@ class App extends Component {
 						<Footer>
 							<Button
 								icon="🙋‍"
-								// onClick={this.handlePlayer}
 								onClick={() => addPlayer()}
 							>Add new player</Button>
 							<Button icon="🏆">Find the winner</Button>
 						</Footer>
 					</section>
-
 				</Layout>
 		);
 	}
