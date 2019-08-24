@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { store } from '../../src/index';
-import { addPlayer } from '../Redux/actions/index';
+import { addPlayer, removePlayer } from '../Redux/actions/index';
 
 import { suits, values } from "../utils";
 
@@ -17,7 +16,8 @@ const mapStateToProps = (state) => ({
 		players: state.players
 });
 const mapDispatchToProps = (dispatch) => ({
-		addPlayer: () => dispatch(addPlayer())
+		addPlayer: () => dispatch(addPlayer()),
+	removePlayer: (index) => dispatch(removePlayer(index))
 });
 
 class App extends Component {
@@ -25,7 +25,11 @@ class App extends Component {
 	render() {
 		console.log(this.props);
 
-		const { players, addPlayer } = this.props;
+		const {
+			players,
+			addPlayer,
+			removePlayer
+		} = this.props;
 
 		return (
 				<Layout>
@@ -40,7 +44,12 @@ class App extends Component {
 						<section>
 						{
 							players.map((key, index) =>
-								<Player key={index} name="Player name " />
+								<Player
+									key={index}
+									index={index}
+									name = {`${key} ${index + 1}`}
+									removePlayer={removePlayer}
+								/>
 						)}
 						</section>
 						<Footer>
