@@ -26,11 +26,11 @@ class Player extends PureComponent {
 	}
 
 	handleSubmit = event => {
-		const { editPlayer, index } = this.props;
+		const { editPlayer, id } = this.props;
 		const { localName } = this.state;
 		event.preventDefault()
 		this.toggleInput()
-		editPlayer(index, localName)
+		editPlayer(id, localName)
 	}
 
 	render(){
@@ -48,12 +48,11 @@ class Player extends PureComponent {
 									type='text'
 									placeholder={name}
 									onChange={(event) => this.handleChange(event)}
+									required
 								/>
 								<Button
 									icon="✏️"
 									type="submit"
-									// value='Submit'
-									// onClick={() => this.toggleInput()}
 								>
 									{showInput ? 'Done' : 'Edit'}
 

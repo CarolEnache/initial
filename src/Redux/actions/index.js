@@ -10,12 +10,12 @@ export function removePlayer(id) {
     id
   }
 };
-export function editPlayer(index, localName) {
-  console.log('say hey', localName, index)
+export function editPlayer(id, name) {
+  // console.log('say hey', name, id)
 
   return {
     type: 'EDIT_PLAYER',
-    index: index,
-    name: localName
+    id,
+    name
   }
 };

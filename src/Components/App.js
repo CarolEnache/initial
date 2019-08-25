@@ -24,7 +24,6 @@ const mapDispatchToProps = (dispatch) => ({
 class App extends Component {
 
 	render() {
-		console.log(this.props.players, this.props.players.length);
 		const {
 			players,
 			addPlayer,
