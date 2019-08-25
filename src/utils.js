@@ -43,9 +43,28 @@ export const removePlayer = (state, action) => {
   }
 }
 
+export const editPlayer = (state, action) => {
+  const { players } = state;
+  const { id, name } = action;
+  console.log(1, players)
 
-
-
+  const newList = [...players].map(m => {
+    if (m.id === id) {
+      return {
+        id: m.id,
+        name: name
+      }
+    }
+    return {
+      id: m.id,
+      name: m.name
+    }
+  });
+  return {
+    ...state,
+    players: [...newList],
+  }
+}
 
 const allCards = values.flatMap(v => suits.map(s => v + s));
 const shuffle = allCards.sort(() => Math.random() - 0.5);
