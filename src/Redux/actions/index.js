@@ -4,9 +4,18 @@ export function addPlayer() {
   }
 };
 
-export function removePlayer(index) {
+export function removePlayer(id) {
   return {
     type: 'REMOVE_PLAYER',
-    index: index
+    id
+  }
+};
+export function editPlayer(index, localName) {
+  console.log('say hey', localName, index)
+
+  return {
+    type: 'EDIT_PLAYER',
+    index: index,
+    name: localName
   }
 };

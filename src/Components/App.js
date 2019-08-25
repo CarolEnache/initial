@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addPlayer, removePlayer } from '../Redux/actions/index';
+import { addPlayer, removePlayer, editPlayer } from '../Redux/actions/index';
 
 import { suits, values } from "../utils";
 
@@ -17,18 +17,19 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
 		addPlayer: () => dispatch(addPlayer()),
-	removePlayer: (index) => dispatch(removePlayer(index))
+		removePlayer: (id) => dispatch(removePlayer(id)),
+		editPlayer: (id, name) => dispatch(editPlayer(id, name))
 });
 
 class App extends Component {
 
 	render() {
-		console.log(this.props);
-
+		console.log(this.props.players, this.props.players.length);
 		const {
 			players,
 			addPlayer,
-			removePlayer
+			removePlayer,
+			editPlayer
 		} = this.props;
 
 		return (
@@ -43,12 +44,13 @@ class App extends Component {
 						</header>
 						<section>
 						{
-							players.map((key, index) =>
+							players.map((key) =>
 								<Player
-									key={index}
-									index={index}
-									name = {`${key} ${index + 1}`}
+									key={key.id}
+									id={key.id}
+									name = {key.name}
 									removePlayer={removePlayer}
+									editPlayer={editPlayer}
 								/>
 						)}
 						</section>
