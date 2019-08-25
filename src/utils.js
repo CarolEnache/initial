@@ -36,7 +36,10 @@ export const removePlayer = (state, action) => {
   const { players } = state;
   const { id } = action;
   console.log(id, action)
-  const newList = [...players].filter(f => f.id !== id);
+  let newList = [...players];
+  if (players.length > 2) {
+    newList = [...players].filter(f => f.id !== id);
+  }
   return {
     ...state,
     players: newList,
