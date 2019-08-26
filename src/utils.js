@@ -35,7 +35,6 @@ export const addPlayer = (state) => {
 export const removePlayer = (state, action) => {
   const { players } = state;
   const { id } = action;
-  console.log(id, action)
   let newList = [...players];
   if (players.length > 2) {
     newList = [...players].filter(f => f.id !== id);
@@ -49,7 +48,6 @@ export const removePlayer = (state, action) => {
 export const editPlayer = (state, action) => {
   const { players } = state;
   const { id, name } = action;
-  console.log(1, players)
 
   const newList = [...players].map(m => {
     if (m.id === id) {
@@ -69,10 +67,27 @@ export const editPlayer = (state, action) => {
   }
 }
 
-const allCards = values.flatMap(v => suits.map(s => v + s));
-const shuffle = allCards.sort(() => Math.random() - 0.5);
-const numberOfPlayers = 5;
+export const allCards = values.flatMap(v => suits.map(s => {
+  return {
+    suit: s,
+    value: v
+  }
+}));
 
-const eachPlayersSetOfCards = Array(numberOfPlayers).fill(" ").map(() => shuffle.splice(0, 5));
+export const original = [...allCards]
+
+export const shuffle = allCards.sort(() => Math.random() - 0.5);
+export const numberOfPlayers = 2;
+
+export const eachPlayersSetOfCards = Array(numberOfPlayers).fill(" ").map(() => shuffle.splice(0, 5));
+
+export const deckCards = original.map(m => {
+  return {
+    selected: allCards.includes(m),
+    value: m.value,
+    suit: m.suit
+  }
+
+});
 
 export const getColourForSuit = suit => suit === "♦" || suit === "♥" ? "red" : "black";

@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 
 import { addPlayer, removePlayer, editPlayer } from '../Redux/actions/index';
 
-import { suits, values } from "../utils";
+import { suits, values, deckCards } from "../utils";
+
 
 import Layout from "./Layout";
 import Deck from "./Deck";
@@ -28,14 +29,15 @@ class App extends Component {
 			players,
 			addPlayer,
 			removePlayer,
-			editPlayer
+			editPlayer,
+			allCards
 		} = this.props;
 
 		return (
 				<Layout>
 					<section>
 						<h1>Cards deck</h1>
-						<Deck suits={suits} values={values} />
+					<Deck cards={deckCards} />
 					</section>
 					<section>
 						<header>

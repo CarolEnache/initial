@@ -36,7 +36,6 @@ class Player extends PureComponent {
 	render(){
 		const { name, removePlayer, id } = this.props;
 		const { showInput } = this.state;
-		// console.log(this.props)
 
 		return (
 			<article>
@@ -84,13 +83,13 @@ class Player extends PureComponent {
 				}
 				</>
 				<PlayerHand>
-					<Card suit="D" value="A" selected={true}>
+					<Card suit="♦" value="A" selected={true}>
 						A
 				</Card>
-					<Card suit="D" value="K">
+					<Card suit="♦" value="K">
 						K
 				</Card>
-					<Card suit="D" value="Q">
+					<Card suit="♦" value="Q">
 						Q
 				</Card>
 					<Card suit="D" value="J">
