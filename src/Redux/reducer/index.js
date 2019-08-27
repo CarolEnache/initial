@@ -26,14 +26,19 @@ export const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_PLAYER':
+      console.log(action)
       return addPlayer(state, action)
     case 'REMOVE_PLAYER':
+        console.log(action)
       return removePlayer(state, action)
     case 'EDIT_PLAYER':
+      console.log(action)
       return editPlayer(state, action)
     case 'UPDATE_LIST':
-      return updatePlayersList(state, action)
-    case 'DETERMINE_WINNER':
+        console.log(action)
+        return updatePlayersList(state, action)
+    case 'DETERMINE_THE_WINNER':
+            console.log(action)
       return determinWinner(state, action)
     default:
       return state

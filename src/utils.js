@@ -18,8 +18,6 @@ export const eachPlayersSetOfCards = (numberOfPlayers) =>
     .fill(" ")
     .map(() => shuffle.splice(0, 5));
 
-// eachPlayersSetOfCards();
-
 export const deckCards = (remainingCards) => initialDeck.map(m => {
   return {
     selected: remainingCards.includes(m),
@@ -57,6 +55,7 @@ export const addPlayer = (state) => {
       }))
     newList.push(...player)
   }
+
   return {
     ...state,
     players: newList,
@@ -106,13 +105,22 @@ export const editPlayer = (state, action) => {
       winner: false
     }
   });
+  console.log('jkhkjhkjhkjhkj')
+
   return {
     ...state,
     players: [...newList],
   }
 }
 
-export const determinWinner = (players) => {
+export const determinWinner = (state) => {
+  const { players } = state
+  // if (players.length) {
+  //   console.log(1, 'asdasd', players.length)
+
+  // }
+  console.log(2, 'asdasd', players, state)
+
   const restructureHands = players.map(hand => {
     const restructuredHands = []
     if (hand.cards) {
@@ -137,12 +145,10 @@ export const determinWinner = (players) => {
         id: m.id,
         cards: m.cards,
         winner: false
-
       }
   })
-  console.log(includeTheWinner)
   return {
-    ...includeTheWinner
+    players: [...includeTheWinner]
   }
 }
 

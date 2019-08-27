@@ -25,7 +25,7 @@ export function updatePlayersList(playersList) {
 };
 export function determinWinner(playersList) {
   return {
-    type: 'DETERMINE_WINNER',
+    type: 'DETERMINE_THE_WINNER',
     playersList,
   }
 };

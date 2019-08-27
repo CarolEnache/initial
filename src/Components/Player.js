@@ -35,11 +35,8 @@ class Player extends PureComponent {
 
 	render(){
 		const { name, removePlayer, id, cards, winner } = this.props;
-		console.log('winner!!!!!!!!!!!!!!!!!!!!!!!!!!!!', winner)
 		const { showInput } = this.state;
-
-		console.log(this.props)
-
+		console.log(winner)
 		return (
 			<article>
 				<>
@@ -86,7 +83,7 @@ class Player extends PureComponent {
 				</>
 				<PlayerHand>
 					<>
-					{winner && 'winner'}
+					{winner && <h1>the winner is {name}!</h1>}
 					{ cards && cards.map(({suit, value, selected}) =>
 						<Card key={suit+value} suit={suit} value={value} selected={selected}>
 							{value}

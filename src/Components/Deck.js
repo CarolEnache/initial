@@ -17,6 +17,5 @@ const Deck = ({ cards }) => {
 		</StyledDeck>
 	)
 }
-	// )
 
 export default Deck;

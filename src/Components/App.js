@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addPlayer, removePlayer, editPlayer, updatePlayersList } from '../Redux/actions/index';
+import {
+	addPlayer,
+	removePlayer,
+	editPlayer,
+	updatePlayersList,
+	determinWinner
+} from '../Redux/actions/index';
 
-import { deckCards, eachPlayersSetOfCards, remainingCards, create_UUID, determinWinner } from "../utils";
+import {
+	deckCards,
+	eachPlayersSetOfCards,
+	remainingCards,
+	create_UUID,
+} from "../utils";
 
 
 import Layout from "./Layout";
@@ -26,8 +37,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 class App extends Component {
-
 	componentDidMount() {
+		const { updatePlayersList } = this.props
 		const { players } = this.props;
 		const numberOfPlayers = players.length;
 		const playersHands = eachPlayersSetOfCards(numberOfPlayers)
@@ -37,8 +48,9 @@ class App extends Component {
 				cards: [...m],
 				winner: false
 			}))
-		return this.props.updatePlayersList(playersList)
+		return updatePlayersList(playersList)
 	}
+
 	render() {
 		const {
 			players,
@@ -46,9 +58,9 @@ class App extends Component {
 			addPlayer,
 			removePlayer,
 			editPlayer,
+			determinWinner,
 		} = this.props;
 
-		console.log(players)
 		return (
 				<Layout>
 					<section>
@@ -80,7 +92,7 @@ class App extends Component {
 							>Add new player</Button>
 							<Button
 								icon="🏆"
-								onClick={() => determinWinner(players)}
+							onClick={() => determinWinner(players)}
 							>Find the winner</Button>
 						</Footer>
 					</section>
