@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { addPlayer, removePlayer, editPlayer, updatePlayersList } from '../Redux/actions/index';
 
-import { deckCards, eachPlayersSetOfCards, remainingCards, create_UUID, } from "../utils";
+import { deckCards, eachPlayersSetOfCards, remainingCards, create_UUID, determinWinner } from "../utils";
 
 
 import Layout from "./Layout";
@@ -21,7 +21,8 @@ const mapDispatchToProps = (dispatch) => ({
 	  addPlayer: () => dispatch(addPlayer()),
 		removePlayer: (id) => dispatch(removePlayer(id)),
 		editPlayer: (id, name) => dispatch(editPlayer(id, name)),
-		updatePlayersList: (playersList) => dispatch(updatePlayersList(playersList))
+		updatePlayersList: (playersList) => dispatch(updatePlayersList(playersList)),
+		determinWinner: (playersList) => dispatch(determinWinner(playersList))
 });
 
 class App extends Component {
@@ -30,17 +31,12 @@ class App extends Component {
 		const { players } = this.props;
 		const numberOfPlayers = players.length;
 		const playersHands = eachPlayersSetOfCards(numberOfPlayers)
-
-		// const playersList = players.map(player => playersHands.map(hand =>
-		// 	({ ...player, cards: hand })
-		// ));
-
 		const playersList = playersHands.map(m => ({
-				name: m.name,
+				name: 'player',
 				id: create_UUID(),
-				cards: [...m]
+				cards: [...m],
+				winner: false
 			}))
-		// To Do Fix this bug
 		return this.props.updatePlayersList(playersList)
 	}
 	render() {
@@ -65,12 +61,13 @@ class App extends Component {
 						</header>
 						<section>
 						{
-							players.map(({id, name, cards}) =>
+							players.map(({id, name, cards, winner}) =>
 								<Player
 									key={id}
 									id={id}
 									name={name}
 									cards={cards}
+									winner={winner}
 									removePlayer={removePlayer}
 									editPlayer={editPlayer}
 								/>)
@@ -81,7 +78,10 @@ class App extends Component {
 								icon="🙋‍"
 								onClick={() => addPlayer()}
 							>Add new player</Button>
-							<Button icon="🏆">Find the winner</Button>
+							<Button
+								icon="🏆"
+								onClick={() => determinWinner(players)}
+							>Find the winner</Button>
 						</Footer>
 					</section>
 				</Layout>

@@ -23,3 +23,9 @@ export function updatePlayersList(playersList) {
     playersList,
   }
 };
+export function determinWinner(playersList) {
+  return {
+    type: 'DETERMINE_WINNER',
+    playersList,
+  }
+};

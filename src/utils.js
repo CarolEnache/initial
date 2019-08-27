@@ -1,5 +1,8 @@
+import poker from 'poker-hands';
+
 const values = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"];
-const suits = ["♦", "♥", "♠", "♣"];
+const suits = ["D", "H", "S", "C"];
+
 
 export const remainingCards = values.flatMap(v => suits.map(s => {
   return {
@@ -49,7 +52,8 @@ export const addPlayer = (state) => {
     player = newPlayerCards.map(m =>({
         name: 'player',
         id: create_UUID(),
-        cards: [...m]
+        cards: [...m],
+        winner: false
       }))
     newList.push(...player)
   }
@@ -60,6 +64,7 @@ export const addPlayer = (state) => {
 }
 
 export const removePlayer = (state, action) => {
+  deckCards(remainingCards)
   const { players } = state;
   const { id } = action;
   let newList = [...players];
@@ -69,14 +74,11 @@ export const removePlayer = (state, action) => {
   return {
     ...state,
     players: [...newList],
-    no: -1
   }
 }
 
 export const updatePlayersList = (state, action) => {
   const { playersList } = action;
-  // const ceva = [...action]
-  console.log('state ', state, 'action ', playersList)
   return {
     ...state,
     players: [...playersList],
@@ -93,13 +95,15 @@ export const editPlayer = (state, action) => {
       return {
         id: m.id,
         name: name,
-        cards: m.cards
+        cards: m.cards,
+        winner: false
       }
     }
     return {
       id: m.id,
       name: m.name,
-      cards: m.cards
+      cards: m.cards,
+      winner: false
     }
   });
   return {
@@ -107,4 +111,39 @@ export const editPlayer = (state, action) => {
     players: [...newList],
   }
 }
-export const getColourForSuit = suit => suit === "♦" || suit === "♥" ? "red" : "black";
+
+export const determinWinner = (players) => {
+  const restructureHands = players.map(hand => {
+    const restructuredHands = []
+    if (hand.cards) {
+      restructuredHands.push(hand.cards.map(a => `${a.suit}${a.value}`).join(' '))
+    }
+    return restructuredHands
+  }).flat()
+
+  const winnerIndex = poker.judgeWinner(restructureHands);
+
+  const includeTheWinner = players.map(m => {
+    if (players.indexOf(m) === winnerIndex){
+      return {
+        name: m.name,
+        id: m.id,
+        cards: m.cards,
+        winner: true
+      }
+    }
+      return {
+        name: m.name,
+        id: m.id,
+        cards: m.cards,
+        winner: false
+
+      }
+  })
+  console.log(includeTheWinner)
+  return {
+    ...includeTheWinner
+  }
+}
+
+export const getColourForSuit = suit => suit === "D" || suit === "H" ? "red" : "black";

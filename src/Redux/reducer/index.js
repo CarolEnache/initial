@@ -4,18 +4,22 @@ import {
   create_UUID,
   editPlayer,
   updatePlayersList,
-  eachPlayersSetOfCards,
+  determinWinner
 } from '../../utils';
 
 export const initialState = {
   players: [
     {
       name: 'player ',
-      id: create_UUID()
+      id: create_UUID(),
+      cards: [],
+      winner: false
     },
     {
       name: 'player ',
-      id: create_UUID()
+      id: create_UUID(),
+      cards: [],
+      winner: false
     }],
 }
 
@@ -29,6 +33,8 @@ const reducer = (state = initialState, action) => {
       return editPlayer(state, action)
     case 'UPDATE_LIST':
       return updatePlayersList(state, action)
+    case 'DETERMINE_WINNER':
+      return determinWinner(state, action)
     default:
       return state
   }
