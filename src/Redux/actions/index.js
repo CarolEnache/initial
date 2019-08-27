@@ -1,6 +1,6 @@
 export function addPlayer() {
   return {
-    type: 'ADD_PLAYER'
+    type: 'ADD_PLAYER',
   }
 };
 
@@ -11,8 +11,6 @@ export function removePlayer(id) {
   }
 };
 export function editPlayer(id, name) {
-  // console.log('say hey', name, id)
-
   return {
     type: 'EDIT_PLAYER',
     id,

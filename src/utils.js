@@ -1,5 +1,5 @@
-export const values = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"];
-export const suits = ["♦", "♥", "♠", "♣"];
+const values = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"];
+const suits = ["♦", "♥", "♠", "♣"];
 
 let player = {
   name: 'player ',
@@ -16,9 +16,11 @@ export function create_UUID() {
   return uuid;
 }
 
-export const addPlayer = (state) => {
+export const addPlayer = (state, action) => {
+  console.log(action)
   const { players } = state;
   const newList = [...players];
+  const { no } = action;
   if (players.length <= 5) {
     player = {
       name: 'player',
@@ -29,6 +31,7 @@ export const addPlayer = (state) => {
   return {
     ...state,
     players: newList,
+    no
   };
 }
 
@@ -42,6 +45,7 @@ export const removePlayer = (state, action) => {
   return {
     ...state,
     players: newList,
+    no: -1
   }
 }
 
@@ -75,19 +79,16 @@ export const allCards = values.flatMap(v => suits.map(s => {
 }));
 
 export const original = [...allCards]
-
 export const shuffle = allCards.sort(() => Math.random() - 0.5);
-export const numberOfPlayers = 2;
-
-export const eachPlayersSetOfCards = Array(numberOfPlayers).fill(" ").map(() => shuffle.splice(0, 5));
-
+const numberOfPlayers = 2
+export const eachPlayersSetOfCards = (numberOfPlayers) => Array(numberOfPlayers).fill(" ").map(() => shuffle.splice(0, 5));
+eachPlayersSetOfCards()
 export const deckCards = original.map(m => {
   return {
     selected: allCards.includes(m),
     value: m.value,
     suit: m.suit
   }
-
 });
 
 export const getColourForSuit = suit => suit === "♦" || suit === "♥" ? "red" : "black";

@@ -34,8 +34,10 @@ class Player extends PureComponent {
 	}
 
 	render(){
-		const { name, removePlayer, id } = this.props;
+		const { name, removePlayer, id, cards } = this.props;
 		const { showInput } = this.state;
+
+		console.log(this.props)
 
 		return (
 			<article>
@@ -62,7 +64,6 @@ class Player extends PureComponent {
 								>
 									Remove
 						</Button>
-
 						</form> :
 							<p>
 								{name}
@@ -83,21 +84,11 @@ class Player extends PureComponent {
 				}
 				</>
 				<PlayerHand>
-					<Card suit="♦" value="A" selected={true}>
-						A
-				</Card>
-					<Card suit="♦" value="K">
-						K
-				</Card>
-					<Card suit="♦" value="Q">
-						Q
-				</Card>
-					<Card suit="D" value="J">
-						J
-				</Card>
-					<Card suit="D" value="T">
-						T
-				</Card>
+					{ cards.map(({suit, value, selected}) =>
+						<Card key={suit+value} suit={suit} value={value} selected={selected}>
+							{value}
+						</Card>
+						)}
 				</PlayerHand>
 			</article>
 		)

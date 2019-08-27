@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { addPlayer, removePlayer, editPlayer } from '../Redux/actions/index';
 
-import { suits, values, deckCards } from "../utils";
+import { deckCards, eachPlayersSetOfCards } from "../utils";
 
 
 import Layout from "./Layout";
@@ -14,10 +14,11 @@ import Button from "./Button";
 import { Footer } from "../Styles/Styled";
 
 const mapStateToProps = (state) => ({
-		players: state.players
+		players: state.players,
+		cards: deckCards
 });
 const mapDispatchToProps = (dispatch) => ({
-		addPlayer: () => dispatch(addPlayer()),
+	  addPlayer: () => dispatch(addPlayer()),
 		removePlayer: (id) => dispatch(removePlayer(id)),
 		editPlayer: (id, name) => dispatch(editPlayer(id, name))
 });
@@ -27,33 +28,41 @@ class App extends Component {
 	render() {
 		const {
 			players,
+			cards,
 			addPlayer,
 			removePlayer,
 			editPlayer,
-			allCards
 		} = this.props;
+		const no = players.length
+		const playersHands = eachPlayersSetOfCards(no)
+		const playersList = players.map(m =>
+			playersHands.map(h =>
+				({...m, cards: h})
+			)
+		);
 
 		return (
 				<Layout>
 					<section>
 						<h1>Cards deck</h1>
-					<Deck cards={deckCards} />
+					<Deck cards={cards} />
 					</section>
 					<section>
 						<header>
 							<h1>Players</h1>
 						</header>
 						<section>
-						{
-							players.map((key) =>
+						{ //To Do: optimize playersList
+							playersList[0].map(({id, name, cards}) =>
 								<Player
-									key={key.id}
-									id={key.id}
-									name = {key.name}
+									key={id}
+									id={id}
+									name={name}
+									cards={cards}
 									removePlayer={removePlayer}
 									editPlayer={editPlayer}
-								/>
-						)}
+								/>)
+						}
 						</section>
 						<Footer>
 							<Button
