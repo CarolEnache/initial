@@ -4,12 +4,7 @@ const values = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
 const suits = ["D", "H", "S", "C"];
 
 
-export const remainingCards = values.flatMap(v => suits.map(s => {
-  return {
-    suit: s,
-    value: v
-  }
-}));
+export const remainingCards = values.flatMap(value => suits.map(suit => ({suit: suit, value: value})));
 
 export const initialDeck = [...remainingCards];
 export const shuffle = remainingCards.sort(() => Math.random() - 0.5);
@@ -31,6 +26,7 @@ let player = {
   id: ''
 }
 
+/* eslint-disable */
 export function create_UUID() {
   var dt = new Date().getTime();
   var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -40,6 +36,7 @@ export function create_UUID() {
   });
   return uuid;
 }
+/* eslint-enable */
 
 export const addPlayer = (state) => {
   deckCards(remainingCards)
@@ -105,7 +102,6 @@ export const editPlayer = (state, action) => {
       winner: false
     }
   });
-  console.log('jkhkjhkjhkjhkj')
 
   return {
     ...state,
@@ -115,12 +111,6 @@ export const editPlayer = (state, action) => {
 
 export const determinWinner = (state) => {
   const { players } = state
-  // if (players.length) {
-  //   console.log(1, 'asdasd', players.length)
-
-  // }
-  console.log(2, 'asdasd', players, state)
-
   const restructureHands = players.map(hand => {
     const restructuredHands = []
     if (hand.cards) {
