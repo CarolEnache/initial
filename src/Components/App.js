@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { addPlayer, removePlayer, editPlayer, updatePlayersList } from '../Redux/actions/index';
 
-import { deckCards, eachPlayersSetOfCards, remainingCards } from "../utils";
+import { deckCards, eachPlayersSetOfCards, remainingCards, create_UUID, } from "../utils";
 
 
 import Layout from "./Layout";
@@ -31,11 +31,17 @@ class App extends Component {
 		const numberOfPlayers = players.length;
 		const playersHands = eachPlayersSetOfCards(numberOfPlayers)
 
-		const playersList = players.map(player => playersHands.map(hand =>
-			({ ...player, cards: hand })
-		));
+		// const playersList = players.map(player => playersHands.map(hand =>
+		// 	({ ...player, cards: hand })
+		// ));
+
+		const playersList = playersHands.map(m => ({
+				name: m.name,
+				id: create_UUID(),
+				cards: [...m]
+			}))
 		// To Do Fix this bug
-		return this.props.updatePlayersList(playersList[0])
+		return this.props.updatePlayersList(playersList)
 	}
 	render() {
 		const {

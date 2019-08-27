@@ -15,7 +15,7 @@ export const eachPlayersSetOfCards = (numberOfPlayers) =>
     .fill(" ")
     .map(() => shuffle.splice(0, 5));
 
-eachPlayersSetOfCards();
+// eachPlayersSetOfCards();
 
 export const deckCards = (remainingCards) => initialDeck.map(m => {
   return {
@@ -41,18 +41,16 @@ export function create_UUID() {
 }
 
 export const addPlayer = (state) => {
-  const newPlayerCards = eachPlayersSetOfCards(1)
   deckCards(remainingCards)
   const { players } = state;
   const newList = [...players];
   if (players.length <= 5) {
-    player = newPlayerCards.map(m => {
-      return {
+    const newPlayerCards = eachPlayersSetOfCards(1)
+    player = newPlayerCards.map(m =>({
         name: 'player',
         id: create_UUID(),
         cards: [...m]
-      }
-    })
+      }))
     newList.push(...player)
   }
   return {
@@ -77,6 +75,8 @@ export const removePlayer = (state, action) => {
 
 export const updatePlayersList = (state, action) => {
   const { playersList } = action;
+  // const ceva = [...action]
+  console.log('state ', state, 'action ', playersList)
   return {
     ...state,
     players: [...playersList],
