@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addPlayer, removePlayer, editPlayer } from '../Redux/actions/index';
+import { addPlayer, removePlayer, editPlayer, updatePlayersList } from '../Redux/actions/index';
 
-import { deckCards, eachPlayersSetOfCards } from "../utils";
+import { deckCards, eachPlayersSetOfCards, remainingCards } from "../utils";
 
 
 import Layout from "./Layout";
@@ -15,16 +15,28 @@ import { Footer } from "../Styles/Styled";
 
 const mapStateToProps = (state) => ({
 		players: state.players,
-		cards: deckCards
+	  cards: deckCards(remainingCards)
 });
 const mapDispatchToProps = (dispatch) => ({
 	  addPlayer: () => dispatch(addPlayer()),
 		removePlayer: (id) => dispatch(removePlayer(id)),
-		editPlayer: (id, name) => dispatch(editPlayer(id, name))
+		editPlayer: (id, name) => dispatch(editPlayer(id, name)),
+		updatePlayersList: (playersList) => dispatch(updatePlayersList(playersList))
 });
 
 class App extends Component {
 
+	componentDidMount() {
+		const { players } = this.props;
+		const numberOfPlayers = players.length;
+		const playersHands = eachPlayersSetOfCards(numberOfPlayers)
+
+		const playersList = players.map(player => playersHands.map(hand =>
+			({ ...player, cards: hand })
+		));
+		// To Do Fix this bug
+		return this.props.updatePlayersList(playersList[0])
+	}
 	render() {
 		const {
 			players,
@@ -33,14 +45,8 @@ class App extends Component {
 			removePlayer,
 			editPlayer,
 		} = this.props;
-		const no = players.length
-		const playersHands = eachPlayersSetOfCards(no)
-		const playersList = players.map(m =>
-			playersHands.map(h =>
-				({...m, cards: h})
-			)
-		);
 
+		console.log(players)
 		return (
 				<Layout>
 					<section>
@@ -52,8 +58,8 @@ class App extends Component {
 							<h1>Players</h1>
 						</header>
 						<section>
-						{ //To Do: optimize playersList
-							playersList[0].map(({id, name, cards}) =>
+						{
+							players.map(({id, name, cards}) =>
 								<Player
 									key={id}
 									id={id}

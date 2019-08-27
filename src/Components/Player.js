@@ -37,7 +37,7 @@ class Player extends PureComponent {
 		const { name, removePlayer, id, cards } = this.props;
 		const { showInput } = this.state;
 
-		console.log(this.props)
+		// console.log(this.props)
 
 		return (
 			<article>
@@ -84,7 +84,7 @@ class Player extends PureComponent {
 				}
 				</>
 				<PlayerHand>
-					{ cards.map(({suit, value, selected}) =>
+					{ cards && cards.map(({suit, value, selected}) =>
 						<Card key={suit+value} suit={suit} value={value} selected={selected}>
 							{value}
 						</Card>

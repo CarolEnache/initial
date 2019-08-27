@@ -17,3 +17,9 @@ export function editPlayer(id, name) {
     name
   }
 };
+export function updatePlayersList(playersList) {
+  return {
+    type: 'UPDATE_LIST',
+    playersList,
+  }
+};

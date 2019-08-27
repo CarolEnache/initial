@@ -3,6 +3,8 @@ import {
   removePlayer,
   create_UUID,
   editPlayer,
+  updatePlayersList,
+  eachPlayersSetOfCards,
 } from '../../utils';
 
 export const initialState = {
@@ -25,6 +27,8 @@ const reducer = (state = initialState, action) => {
       return removePlayer(state, action)
     case 'EDIT_PLAYER':
       return editPlayer(state, action)
+    case 'UPDATE_LIST':
+      return updatePlayersList(state, action)
     default:
       return state
   }
